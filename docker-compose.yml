@@ -1,0 +1,48 @@
+services:
+  db:
+    image: mongo:7
+    container_name: paypal_mongo
+    volumes:
+      - ./data/mongo:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+  server:
+    build: ./server
+    env_file:
+      - server/.env
+    environment:
+      - MONGODB_URI=mongodb://db:27017/paypal_db
+    depends_on:
+      db:
+        condition: service_healthy
+  app:
+    build:
+      context: ./client
+      args:
+        - REACT_APP_API_URL=http://localhost:8000
+    env_file:
+      - client/.env
+    ports:
+      - "3000:80"
+    depends_on:
+      - server
+  kong:
+    image: kong:3.4
+    environment:
+      - KONG_DATABASE=off
+      - KONG_DECLARATIVE_CONFIG=/kong/declarative/kong.yml
+      - KONG_PROXY_ACCESS_LOG=/dev/stdout
+      - KONG_ADMIN_ACCESS_LOG=/dev/stdout
+      - KONG_PROXY_ERROR_LOG=/dev/stderr
+      - KONG_ADMIN_ERROR_LOG=/dev/stderr
+    ports:
+      - "8000:8000"
+      - "8001:8001"
+    volumes:
+      - ./kong/kong.yml:/kong/declarative/kong.yml:ro
+    depends_on:
+      - server

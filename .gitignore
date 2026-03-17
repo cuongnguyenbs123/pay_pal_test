@@ -16,6 +16,8 @@ npm-debug.log*
 *.db
 *.sqlite
 *.sqlite3
+# MongoDB data (bind mount)
+data/
 
 # Build
 client/build/

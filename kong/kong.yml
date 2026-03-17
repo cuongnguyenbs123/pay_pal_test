@@ -1,0 +1,11 @@
+_format_version: "3.0"
+_transform: true
+
+services:
+  - name: backend
+    url: http://server:5000
+    routes:
+      - name: api-route
+        paths:
+          - /api
+        strip_path: true

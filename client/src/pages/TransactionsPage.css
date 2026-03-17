@@ -1,0 +1,46 @@
+.transactions-page {
+  min-height: 100vh;
+  padding: 24px;
+}
+
+.transactions-page-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.transactions-page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.transactions-page-header h1 {
+  margin: 0;
+  color: #333;
+  font-size: 1.75rem;
+}
+
+.transactions-page-back {
+  padding: 10px 20px;
+  background: #667eea;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+
+.transactions-page-back:hover {
+  background: #5568d3;
+}
+
+.transactions-page .transaction-history {
+  margin-top: 0;
+}

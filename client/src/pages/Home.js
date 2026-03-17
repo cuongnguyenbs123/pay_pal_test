@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PaymentForm from '../components/PaymentForm';
 import PaymentLog from '../components/PaymentLog';
+import TransactionHistory from '../components/TransactionHistory';
 import './Home.css';
 
 function Home() {
@@ -10,6 +11,14 @@ function Home() {
     const timestamp = new Date().toLocaleTimeString();
     setPaymentLog(prev => [...prev, { timestamp, message, type }]);
   };
+  console.log('Rendering Home component');
+  React.useEffect(() => {
+    console.log('Mounted Home component');
+
+    return () => {
+      console.log('Unmounted Home component');
+    }
+  }, []);
 
   return (
     <div className="home-container">
@@ -26,6 +35,7 @@ function Home() {
             <PaymentLog logs={paymentLog} />
           </div>
         </div>
+        <TransactionHistory />
       </div>
     </div>
   );

@@ -1,0 +1,109 @@
+.transaction-history {
+  margin-top: 30px;
+  background: #f8f9fa;
+  padding: 24px;
+  border-radius: 12px;
+}
+
+.transaction-history h2 {
+  color: #333;
+  margin: 0 0 16px 0;
+  font-size: 1.35rem;
+}
+
+.transaction-history-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.transaction-history-header h2 {
+  margin: 0;
+}
+
+.transaction-refresh {
+  padding: 8px 16px;
+  background: #2196f3;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.transaction-refresh:hover {
+  background: #1976d2;
+}
+
+.transaction-loading,
+.transaction-error,
+.transaction-empty {
+  text-align: center;
+  padding: 24px;
+  color: #666;
+}
+
+.transaction-error {
+  color: #c62828;
+}
+
+.transaction-table-wrap {
+  overflow-x: auto;
+}
+
+.transaction-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.transaction-table th,
+.transaction-table td {
+  padding: 10px 12px;
+  text-align: left;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.transaction-table th {
+  background: #e3f2fd;
+  color: #1565c0;
+  font-weight: 600;
+}
+
+.transaction-table tbody tr:hover {
+  background: rgba(33, 150, 243, 0.05);
+}
+
+.tx-order-id,
+.tx-capture-id {
+  font-family: 'Courier New', monospace;
+  font-size: 0.85rem;
+  word-break: break-all;
+}
+
+.tx-status {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+}
+
+.status-created {
+  background: #e3f2fd;
+  color: #1976d2;
+}
+
+.status-completed {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.status-failed {
+  background: #ffebee;
+  color: #c62828;
+}
+
+.status-cancelled {
+  background: #fff3e0;
+  color: #e65100;
+}

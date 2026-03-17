@@ -3,7 +3,8 @@ import { PayPalButtons, usePayPalScriptReducer } from '@paypal/react-paypal-js';
 import axios from 'axios';
 import './PaymentForm.css';
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+const API_BASE = process.env.REACT_APP_API_URL !== undefined ? process.env.REACT_APP_API_URL : 'http://localhost:8000';
+const API_URL = `${API_BASE}/api`;  
 
 function PaymentForm({ onLog }) {
   const [amount, setAmount] = useState('10.00');
@@ -12,7 +13,14 @@ function PaymentForm({ onLog }) {
   const [orderId, setOrderId] = useState(null);
   const [paymentStatus, setPaymentStatus] = useState(null);
   const [{ isPending }] = usePayPalScriptReducer();
+   console.log('Rendering PaymentForm component');
+  React.useEffect(() => {
+    console.log('Mounted PaymentForm component');
 
+    return () => {
+      console.log('Unmounted PaymentForm component');
+    }
+  }, []);
   const createOrder = async (data, actions) => {
     try {
       onLog('🔄 Đang tạo PayPal order...', 'info');

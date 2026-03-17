@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const paypalRoutes = require('./routes/paypal');
+const { connectDB } = require('./db/connect');
 
 dotenv.config();
 
@@ -21,8 +22,18 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', message: 'Server is running' });
 });
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-  console.log(`PayPal Mode: ${process.env.PAYPAL_MODE || 'sandbox'}`);
-});
+async function start() {
+  try {
+    await connectDB();
+    app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
+      console.log(`PayPal Mode: ${process.env.PAYPAL_MODE || 'sandbox'}`);
+    });
+  } catch (err) {
+    console.error('Failed to start server:', err);
+    process.exit(1);
+  }
+}
+
+start();
 
