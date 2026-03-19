@@ -8,4 +8,4 @@ services:
       - name: api-route
         paths:
           - /api
-        strip_path: true
+        strip_path: false
