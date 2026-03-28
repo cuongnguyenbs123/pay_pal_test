@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
 import { PayPalButtons, usePayPalScriptReducer } from '@paypal/react-paypal-js';
-import axios from 'axios';
 import './PaymentForm.css';
-
-const API_BASE = process.env.REACT_APP_API_URL !== undefined ? process.env.REACT_APP_API_URL : 'http://localhost:8000';
-const API_URL = `${API_BASE}/api`;  
+import { apiClient } from '../auth/axiosClients';
 
 function PaymentForm({ onLog }) {
   const [amount, setAmount] = useState('10.00');
@@ -25,7 +22,7 @@ function PaymentForm({ onLog }) {
     try {
       onLog('🔄 Đang tạo PayPal order...', 'info');
       
-      const response = await axios.post(`${API_URL}/paypal/create-order`, {
+      const response = await apiClient.post('/api/payments/create-order', {
         amount,
         currency,
         description
@@ -49,7 +46,7 @@ function PaymentForm({ onLog }) {
     try {
       onLog('🔄 User đã approve payment, đang capture order...', 'info');
       
-      const response = await axios.post(`${API_URL}/paypal/capture-order`, {
+      const response = await apiClient.post('/api/payments/capture-order', {
         orderId: data.orderID
       });
 

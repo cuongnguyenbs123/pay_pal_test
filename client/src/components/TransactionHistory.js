@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import './TransactionHistory.css';
-
-const API_BASE = process.env.REACT_APP_API_URL !== undefined ? process.env.REACT_APP_API_URL : 'http://localhost:8000';
-const API_URL = `${API_BASE}/api`;
+import { apiClient } from '../auth/axiosClients';
 
 function TransactionHistory() {
   const [transactions, setTransactions] = useState([]);
@@ -14,7 +11,7 @@ function TransactionHistory() {
     setLoading(true);
     setError(null);
     try {
-      const res = await axios.get(`${API_URL}/paypal/transactions`, {
+      const res = await apiClient.get('/api/payments/transactions', {
         params: { limit: 50, offset: 0 },
       });
       if (res.data.success) setTransactions(res.data.transactions || []);

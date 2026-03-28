@@ -10,12 +10,32 @@ services:
       timeout: 5s
       retries: 5
       start_period: 10s
-  server:
-    build: ./server
+  payment-service:
+    build: ./payment-service
     env_file:
-      - server/.env
+      - payment-service/.env
     environment:
-      - MONGODB_URI=mongodb://db:27017/paypal_db
+      - MONGODB_URI=mongodb://db:27017/payment_db
+    depends_on:
+      db:
+        condition: service_healthy
+  auth-service:
+    build: ./auth-service
+    env_file:
+      - auth-service/.env
+    environment:
+      - MONGODB_URI=mongodb://db:27017/auth_db
+      - JWT_SECRET=dev-secret
+    depends_on:
+      db:
+        condition: service_healthy
+  user-service:
+    build: ./user-service
+    env_file:
+      - user-service/.env
+    environment:
+      - MONGODB_URI=mongodb://db:27017/user_db
+      - JWT_SECRET=dev-secret
     depends_on:
       db:
         condition: service_healthy
@@ -29,8 +49,11 @@ services:
     ports:
       - "3000:80"
     depends_on:
-      - server
+      - payment-service
+      - auth-service
+      - user-service
   kong:
+    container_name: kong_gateway
     image: kong:3.4
     environment:
       - KONG_DATABASE=off
@@ -45,4 +68,6 @@ services:
     volumes:
       - ./kong/kong.yml:/kong/declarative/kong.yml:ro
     depends_on:
-      - server
+      - payment-service
+      - auth-service
+      - user-service
